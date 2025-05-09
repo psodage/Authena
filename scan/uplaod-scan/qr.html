@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Reader with QuaggaJS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+</head>
+<body>
+    <h2>Upload an Image to Read Barcode</h2>
+    <input type="file" id="fileInput" accept="image/*">
+    <p id="result">Waiting for barcode...</p>
+    <img id="preview" style="max-width: 300px; display: none;"/>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let img = document.getElementById('preview');
+                img.src = e.target.result;
+                img.style.display = "block";
+
+                Quagga.decodeSingle({
+                    src: e.target.result,
+                    numOfWorkers: 0, 
+                    decoder: {
+                        readers: ["ean_reader", "upc_reader", "code_128_reader"] // Adjust for barcode type
+                    }
+                }, function(result) {
+                    if (result && result.codeResult) {
+                        document.getElementById('result').innerText = "Barcode: " + result.codeResult.code;
+                    } else {
+                        document.getElementById('result').innerText = "No barcode detected.";
+                    }
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

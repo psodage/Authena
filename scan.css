@@ -1,0 +1,992 @@
+.verification-authentic {
+    background-color: #dff2bf;
+    color: #4F8A10;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.verification-fake {
+    background-color: #ffbaba;
+    color: #D8000C;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.verification-loading {
+    background-color: #bde5f8;
+    color: #00529B;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.verification-result {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.product-info table {
+    margin-top: 20px;
+}
+
+.counterfeit-warning {
+    border-left: 4px solid #D8000C;
+    padding-left: 15px;
+}
+
+.scan-instructions ul {
+    text-align: left;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.scan-instructions li {
+    margin-bottom: 10px;
+}
+
+#restart-button {
+    margin-top: 20px;
+}
+      /* Main Scanner Section Styles */
+      .scan-qr {
+        background-color: #f8f9fa;
+        padding: 80px 0;
+    }
+    
+    .section-title h2 {
+        position: relative;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+    }
+    
+    .section-title h2:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 80px;
+        height: 3px;
+        background: var(--primary-color, #1A76D1);
+        margin-left: -40px;
+    }
+    
+    /* Scanner Container */
+    .scan-container {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 40px 30px;
+        transition: all 0.3s ease;
+    }
+    
+    /* QR Scanner Element */
+    #reader {
+        margin: 0 auto;
+        max-width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        border: none !important;
+        box-shadow: 0 0 0 2px rgba(26, 118, 209, 0.1);
+    }
+    
+    #reader video {
+        border-radius: 8px;
+    }
+    
+    /* QR Scanner Overlay */
+    #reader::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid var(--primary-color, #1A76D1);
+        border-radius: 8px;
+        z-index: 10;
+        pointer-events: none;
+    }
+    
+    /* Scanner Corner Markers */
+    .scan-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 280px;
+        height: 280px;
+        transform: translate(-50%, -50%);
+        z-index: 9;
+        pointer-events: none;
+    }
+    
+    .scan-overlay .corner {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-color: #fff;
+        border-style: solid;
+        border-width: 0;
+    }
+    
+    .scan-overlay .corner-tl {
+        top: 0;
+        left: 0;
+        border-top-width: 4px;
+        border-left-width: 4px;
+        border-top-left-radius: 8px;
+    }
+    
+    .scan-overlay .corner-tr {
+        top: 0;
+        right: 0;
+        border-top-width: 4px;
+        border-right-width: 4px;
+        border-top-right-radius: 8px;
+    }
+    
+    .scan-overlay .corner-bl {
+        bottom: 0;
+        left: 0;
+        border-bottom-width: 4px;
+        border-left-width: 4px;
+        border-bottom-left-radius: 8px;
+    }
+    
+    .scan-overlay .corner-br {
+        bottom: 0;
+        right: 0;
+        border-bottom-width: 4px;
+        border-right-width: 4px;
+        border-bottom-right-radius: 8px;
+    }
+    
+    /* Scan Line Animation */
+    .scan-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 2px;
+        background: #1A76D1;
+        z-index: 11;
+        animation: scan 2s infinite;
+        box-shadow: 0 0 8px 1px rgba(26, 118, 209, 0.5);
+        transform: translateY(-50%);
+    }
+    
+    @keyframes scan {
+        0% {
+            top: 20%;
+        }
+        50% {
+            top: 80%;
+        }
+        100% {
+            top: 20%;
+        }
+    }
+    
+    /* Results Container */
+    #scan-result {
+        margin-top: 40px;
+        transition: all 0.5s ease;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    #scan-result.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .verification-result {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        border: none;
+    }
+    
+    .verification-result h4 {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    /* Verification Status Styles */
+    .verification-authentic,
+    .verification-fake,
+    .verification-loading {
+        border-radius: 50px;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 18px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .verification-authentic {
+        background-color: #edfaf2;
+        color: #28a745;
+        border-left: 4px solid #28a745;
+    }
+    
+    .verification-fake {
+        background-color: #fdf2f2;
+        color: #dc3545;
+        border-left: 4px solid #dc3545;
+    }
+    
+    .verification-loading {
+        background-color: #e8f4fd;
+        color: #1A76D1;
+        border-left: 4px solid #1A76D1;
+    }
+    
+    .verification-authentic i,
+    .verification-fake i,
+    .verification-loading i {
+        margin-right: 12px;
+        font-size: 24px;
+    }
+    
+    /* Product Info Styles */
+    .product-info {
+        margin-top: 30px;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    .product-info h5 {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+        position: relative;
+        padding-left: 15px;
+    }
+    
+    .product-info h5:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 20px;
+        width: 4px;
+        background: var(--primary-color, #1A76D1);
+        border-radius: 2px;
+    }
+    
+    .product-info table {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        border: none;
+    }
+    
+    .product-info table th {
+        background-color: #f8f9fa;
+        font-weight: 500;
+        color: #495057;
+        border-color: #f0f0f0;
+        width: 40%;
+    }
+    
+    .product-info table td {
+        font-weight: 400;
+        color: #333;
+        border-color: #f0f0f0;
+    }
+    
+    /* Counterfeit Warning */
+    .counterfeit-warning {
+        background-color: #fff8f8;
+        border-left: 4px solid #dc3545;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .counterfeit-warning p {
+        margin-bottom: 10px;
+        color: #555;
+    }
+    
+    .counterfeit-warning a {
+        color: #dc3545;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+    
+    /* Instructions Section */
+    .scan-instructions {
+        margin-top: 40px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .scan-instructions h4 {
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .scan-instructions ul {
+        max-width: 80%;
+        margin: 0 auto;
+        padding-left: 20px;
+    }
+    
+    .scan-instructions li {
+        margin-bottom: 15px;
+        position: relative;
+        padding-left: 10px;
+        color: #555;
+    }
+    
+    .scan-instructions li:before {
+        content: '\f00c';
+        font-family: FontAwesome;
+        position: absolute;
+        left: -20px;
+        color: var(--primary-color, #1A76D1);
+    }
+    
+    /* Button Styles */
+    #restart-button {
+        background: var(--primary-color, #1A76D1);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 500;
+        margin-top: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(26, 118, 209, 0.2);
+    }
+    
+    #restart-button:hover {
+        background: #0d63b3;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(26, 118, 209, 0.3);
+    }
+    
+    /* Scanned Result Text */
+    #scanned-result {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: monospace;
+        word-break: break-all;
+        margin-bottom: 20px;
+        border-left: 4px solid #6c757d;
+        color: #495057;
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .scan-qr {
+            padding: 50px 0;
+        }
+        
+        .scan-container {
+            padding: 60px 35px;
+        }
+        
+        #reader {
+            width: 100% !important;
+        }
+        
+        .verification-authentic,
+        .verification-fake,
+        .verification-loading {
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+        
+        .scan-instructions ul {
+            max-width: 100%;
+        }
+    }
+    
+    /* Custom HTML5QR Code Library Overrides */
+    #reader__dashboard {
+        background: #f8f9fa !important;
+        border-radius: 0 0 8px 8px !important;
+    }
+    
+    #reader__scan_region {
+        background: #000 !important;
+        position: relative;
+    }
+    
+    #reader__scan_region img {
+        display: none !important;
+    }
+    
+    /* Fix for HTML5 QR Library UI elements */
+    #reader__header_message {
+        display: none !important;
+    }
+    
+    /* Fix for HTML5 QR Scan Region */
+    #reader__scan_region::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        pointer-events: none;
+    }
+    /* Enhanced styling for QR scanner section */
+.scan-qr {
+background-color: #f8f9fa;
+padding: 80px 0;
+position: relative;
+}
+
+.scan-qr::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1250px;
+background: linear-gradient(135deg, #1A76D1, #0d63b3);
+opacity: 0.08;
+z-index: 0;
+}
+
+.section-title {
+position: relative;
+z-index: 1;
+margin-bottom: 50px;
+}
+
+.section-title h2 {
+position: relative;
+margin-bottom: 20px;
+padding-bottom: 15px;
+font-weight: 600;
+color: #333;
+}
+
+.section-title h2:after {
+content: '';
+position: absolute;
+left: 50%;
+bottom: 0;
+width: 80px;
+height: 3px;
+background: var(--primary-color, #1A76D1);
+margin-left: -40px;
+}
+
+.section-title p {
+color: #666;
+max-width: 700px;
+margin: 0 auto;
+font-size: 16px;
+}
+
+/* Scanner Container */
+.scan-container {
+background: #fff;
+border-radius: 15px;
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+padding: 30px;
+position: relative;
+z-index: 2;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+
+/* Scanner Wrapper & Animation */
+.scanner-wrapper {
+position: relative;
+max-width: 450px;
+margin: 0 auto 20px;
+border-radius: 15px;
+overflow: hidden;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+transition: all 0.5s ease;
+}
+
+.scanner-wrapper::after {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.08));
+pointer-events: none;
+z-index: 9;
+}
+
+/* QR Scanner Element */
+#reader {
+margin: 0 auto;
+max-width: 100%;
+border-radius: 12px !important;
+overflow: hidden;
+border: none !important;
+box-shadow: none !important;
+}
+
+#reader video {
+border-radius: 12px;
+}
+
+/* Scanner Corner Markers */
+.scan-overlay {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 260px;
+height: 260px;
+transform: translate(-50%, -50%);
+z-index: 10;
+pointer-events: none;
+}
+
+.scan-overlay .corner {
+position: absolute;
+width: 40px;
+height: 40px;
+border-color: #fff;
+border-style: solid;
+border-width: 0;
+}
+
+.scan-overlay .corner-tl {
+top: 0;
+left: 0;
+border-top-width: 4px;
+border-left-width: 4px;
+border-top-left-radius: 8px;
+}
+
+.scan-overlay .corner-tr {
+top: 0;
+right: 0;
+border-top-width: 4px;
+border-right-width: 4px;
+border-top-right-radius: 8px;
+}
+
+.scan-overlay .corner-bl {
+bottom: 0;
+left: 0;
+border-bottom-width: 4px;
+border-left-width: 4px;
+border-bottom-left-radius: 8px;
+}
+
+.scan-overlay .corner-br {
+bottom: 0;
+right: 0;
+border-bottom-width: 4px;
+border-right-width: 4px;
+border-bottom-right-radius: 8px;
+}
+
+/* Scan Line Animation */
+.scan-line {
+position: absolute;
+left: 0;
+right: 0;
+top: 50%;
+height: 2px;
+background: #1A76D1;
+z-index: 11;
+animation: scan 2s infinite;
+box-shadow: 0 0 8px 1px rgba(26, 118, 209, 0.5);
+transform: translateY(-50%);
+}
+
+@keyframes scan {
+0% {
+top: 20%;
+}
+50% {
+top: 80%;
+}
+100% {
+top: 20%;
+}
+}
+
+/* Results Container */
+#scan-result {
+margin-top: 40px;
+transition: all 0.5s ease;
+opacity: 0;
+transform: translateY(20px);
+background: #fff;
+border-radius: 15px;
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+padding: 30px;
+position: relative;
+}
+
+#scan-result.active {
+opacity: 1;
+transform: translateY(0);
+}
+
+.verification-result {
+background: #fff;
+border-radius: 10px;
+overflow: hidden;
+border: none;
+}
+
+.verification-result h4 {
+text-align: center;
+padding-bottom: 15px;
+margin-bottom: 25px;
+color: #333;
+font-weight: 600;
+position: relative;
+}
+
+.verification-result h4:after {
+content: '';
+position: absolute;
+left: 50%;
+bottom: 0;
+width: 60px;
+height: 3px;
+background: var(--primary-color, #1A76D1);
+margin-left: -30px;
+}
+
+/* Verification Status Styles */
+.verification-authentic,
+.verification-fake,
+.verification-loading {
+border-radius: 50px;
+padding: 15px 25px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 500;
+font-size: 18px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+transition: all 0.3s ease;
+}
+
+.verification-authentic {
+background-color: #edfaf2;
+color: #28a745;
+border-left: 4px solid #28a745;
+}
+
+.verification-fake {
+background-color: #fdf2f2;
+color: #dc3545;
+border-left: 4px solid #dc3545;
+}
+
+.verification-loading {
+background-color: #e8f4fd;
+color: #1A76D1;
+border-left: 4px solid #1A76D1;
+}
+
+.verification-authentic i,
+.verification-fake i,
+.verification-loading i {
+margin-right: 12px;
+font-size: 24px;
+}
+
+/* Product Info Styles */
+.product-info {
+margin-top: 30px;
+animation: fadeIn 0.5s ease;
+}
+
+.product-info h5 {
+font-weight: 600;
+margin-bottom: 20px;
+color: #333;
+position: relative;
+padding-left: 15px;
+}
+
+.product-info h5:before {
+content: '';
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+height: 20px;
+width: 4px;
+background: var(--primary-color, #1A76D1);
+border-radius: 2px;
+}
+
+.product-info table {
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+border: none;
+}
+
+.product-info table th {
+background-color: #f8f9fa;
+font-weight: 500;
+color: #495057;
+border-color: #f0f0f0;
+width: 40%;
+}
+
+.product-info table td {
+font-weight: 400;
+color: #333;
+border-color: #f0f0f0;
+}
+
+/* Counterfeit Warning */
+.counterfeit-warning {
+background-color: #fff8f8;
+border-left: 4px solid #dc3545;
+padding: 20px;
+border-radius: 8px;
+margin-top: 20px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Button Styles */
+#restart-button {
+background: var(--primary-color, #1A76D1);
+color: #fff;
+border: none;
+border-radius: 50px;
+padding: 14px 35px;
+font-weight: 500;
+margin-top: 25px;
+transition: all 0.3s ease;
+box-shadow: 0 5px 15px rgba(26, 118, 209, 0.2);
+font-size: 16px;
+}
+
+#restart-button:hover {
+background: #0d63b3;
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(26, 118, 209, 0.3);
+}
+
+/* Benefits section with visual improvements */
+.benefits-section {
+margin: 80px 0;
+position: relative;
+z-index: 1;
+}
+
+.benefits-section h3 {
+font-weight: 600;
+color: #333;
+margin-bottom: 40px;
+position: relative;
+padding-bottom: 15px;
+}
+
+.benefits-section h3:after {
+content: '';
+position: absolute;
+left: 50%;
+bottom: 0;
+width: 60px;
+height: 3px;
+background: var(--primary-color, #1A76D1);
+margin-left: -30px;
+}
+
+.benefit-box {
+background: #fff;
+padding: 30px 20px;
+border-radius: 12px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+height: 100%;
+transition: all 0.3s ease;
+}
+
+.benefit-box:hover {
+transform: translateY(-5px);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-icon {
+width: 90px;
+height: 90px;
+line-height: 90px;
+border-radius: 50%;
+background: rgba(26, 118, 209, 0.1);
+display: inline-flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 20px;
+transition: all 0.3s ease;
+}
+
+.benefit-icon i {
+font-size: 40px;
+color: #1A76D1;
+transition: all 0.3s ease;
+}
+
+.benefit-box:hover .benefit-icon {
+background: #1A76D1;
+}
+
+.benefit-box:hover .benefit-icon i {
+color: #fff;
+}
+
+.benefit-box h5 {
+font-weight: 600;
+margin-bottom: 15px;
+color: #333;
+}
+
+.benefit-box p {
+color: #666;
+margin-bottom: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+.scan-qr {
+padding: 50px 0;
+}
+
+.scanner-wrapper {
+max-width: 100%;
+}
+
+#reader {
+width: 100% !important;
+height: 300px !important;
+}
+
+.scan-overlay {
+width: 200px;
+height: 200px;
+}
+
+.verification-authentic,
+.verification-fake,
+.verification-loading {
+padding: 12px 20px;
+font-size: 16px;
+}
+
+.benefit-box {
+margin-bottom: 20px;
+}
+}
+
+/* Pulsing animation for scan button */
+@keyframes pulse {
+0% {
+box-shadow: 0 0 0 0 rgba(26, 118, 209, 0.7);
+}
+70% {
+box-shadow: 0 0 0 10px rgba(26, 118, 209, 0);
+}
+100% {
+box-shadow: 0 0 0 0 rgba(26, 118, 209, 0);
+}
+}
+
+#restart-button {
+animation: pulse 2s infinite;
+}
+.verification-benefits {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+
+.benefit-icon {
+    height: 80px;
+    width: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    background: rgba(26, 118, 209, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.benefit-icon:hover {
+    transform: translateY(-5px);
+    background: rgba(26, 118, 209, 0.15);
+}
+
+.scan-details {
+    border-left: 4px solid #1A76D1;
+}
+
+#authentic-actions .btn, #fake-actions .btn {
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+#authentic-actions .btn:hover, #fake-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+/* Fix for HTML5 QR Library UI elements */
+#reader__dashboard_section_csr button {
+background: #1A76D1 !important;
+color: white !important;
+border-radius: 4px !important;
+padding: 8px 15px !important;
+border: none !important;
+}
+
+#reader__dashboard_section_csr select {
+border-radius: 4px !important;
+padding: 8px !important;
+border: 1px solid #ddd !important;
+}
+
+#reader__dashboard_section_csr {
+background: #f8f9fa !important;  
+padding: 15px !important;
+}

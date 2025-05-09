@@ -1,0 +1,382 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 22, 2025 at 02:36 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `authena`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `role` enum('super_admin','admin','editor') DEFAULT 'admin',
+  `is_active` tinyint(1) DEFAULT 1,
+  `last_login` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `role`, `is_active`, `last_login`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '$2y$10$1qAz2wSx3eDc4rFv5tDZ5eKY8zIPsR/g/sgF576bmfQBK.ak9mVXS', 'admin@authena.com', 'System', 'Administrator', 'super_admin', 1, NULL, '2025-04-22 06:19:33', '2025-04-22 06:19:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brands`
+--
+
+CREATE TABLE `brands` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `logo_url` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `contact_email` varchar(100) DEFAULT NULL,
+  `contact_phone` varchar(20) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `logo_url`, `website`, `description`, `contact_email`, `contact_phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Adidas', 'assets/img/brands/adidas.png', 'https://www.adidas.com', 'Adidas AG is a German multinational corporation that designs and manufactures shoes, clothing and accessories.', NULL, NULL, NULL, 'inactive', '2025-04-22 06:19:33', '2025-04-22 10:53:45'),
+(2, 'Nike', 'assets/img/brands/nike.png', 'https://www.nike.com', 'Nike, Inc. is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, apparel, equipment, accessories, and services.', NULL, NULL, NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(3, 'Samsung', 'assets/img/brands/samsung.png', 'https://www.samsung.com', 'Samsung Electronics Co., Ltd. is a South Korean multinational electronics company.', NULL, NULL, NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(4, 'Apple', 'assets/img/brands/apple.png', 'https://www.apple.com', 'Apple Inc. is an American multinational technology company that specializes in consumer electronics, computer software, and online services.', NULL, NULL, NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `description`, `parent_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Electronics', 'Electronic devices and accessories', NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(2, 'Clothing', 'Apparel items including shirts, pants, jackets', NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(3, 'Footwear', 'Shoes, sandals, and other footwear products', NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(4, 'Accessories', 'Watches, bags, and other personal accessories', NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(5, 'Cosmetics', 'Beauty and personal care products', NULL, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fake_reports`
+--
+
+CREATE TABLE `fake_reports` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `report_type` enum('counterfeit','tampered','expired','other') DEFAULT 'counterfeit',
+  `description` text DEFAULT NULL,
+  `evidence_images` text DEFAULT NULL,
+  `location_lat` decimal(10,8) DEFAULT NULL,
+  `location_lng` decimal(11,8) DEFAULT NULL,
+  `location_address` text DEFAULT NULL,
+  `status` enum('pending','investigating','resolved','rejected') DEFAULT 'pending',
+  `admin_notes` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fake_reports`
+--
+
+INSERT INTO `fake_reports` (`id`, `product_id`, `user_id`, `report_type`, `description`, `evidence_images`, `location_lat`, `location_lng`, `location_address`, `status`, `admin_notes`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 'counterfeit', 'The product logo looks off and the material feels cheap', NULL, 41.87810000, -87.62980000, 'Chicago, IL, USA', 'investigating', NULL, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(2, 7, 3, 'tampered', 'The packaging appears to have been opened and resealed', NULL, 51.50740000, -0.12780000, 'London, UK', 'pending', NULL, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(3, 9, 2, 'other', 'The product features do not match the description on official website', NULL, 43.65320000, -79.38320000, 'Toronto, ON, Canada', 'resolved', NULL, '2025-04-22 06:19:33', '2025-04-22 06:19:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `product_code` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `brand_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `qr_code_url` varchar(255) DEFAULT NULL,
+  `unique_identifier` varchar(255) NOT NULL,
+  `manufacturing_date` date DEFAULT NULL,
+  `expiry_date` date DEFAULT NULL,
+  `batch_number` varchar(50) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `additional_images` text DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `status` enum('active','inactive','pending') DEFAULT 'active',
+  `verification_count` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `product_code`, `description`, `brand_id`, `category_id`, `qr_code_url`, `unique_identifier`, `manufacturing_date`, `expiry_date`, `batch_number`, `image_url`, `additional_images`, `price`, `status`, `verification_count`, `created_at`, `updated_at`) VALUES
+(1, 'iPhone 13 Pro', 'APPL-IP13-PRO', 'Apple iPhone 13 Pro with A15 Bionic chip', 4, 1, NULL, 'APPL-IP13-PRO-2023-001', '2023-01-15', NULL, NULL, NULL, NULL, 999.99, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(2, 'Galaxy S22 Ultra', 'SMSNG-S22-ULTRA', 'Samsung Galaxy S22 Ultra with 108MP camera', 3, 1, NULL, 'SMSNG-S22-ULTRA-2023-001', '2023-02-10', NULL, NULL, NULL, NULL, 1199.99, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(3, 'Ultraboost 22', 'ADIDAS-UB22-001', 'Adidas Ultraboost 22 running shoes', 1, 3, NULL, 'ADIDAS-UB22-001-2023-001', '2023-03-01', NULL, NULL, NULL, NULL, 189.99, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(4, 'Air Jordan 1', 'NIKE-AJ1-2023', 'Nike Air Jordan 1 Retro High OG', 2, 3, NULL, 'NIKE-AJ1-2023-001', '2023-01-20', NULL, NULL, NULL, NULL, 170.00, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(6, 'Galaxy Watch 5', 'SMSNG-WATCH5-001', 'Samsung Galaxy Watch 5 40mm', 3, 4, NULL, 'SMSNG-WATCH5-001-2023-001', '2023-04-10', NULL, NULL, NULL, NULL, 279.99, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(7, 'Adidas Trefoil Hoodie', 'ADIDAS-HOODIE-001', 'Adidas Originals Trefoil Hoodie', 1, 2, NULL, 'ADIDAS-HOODIE-001-2023-001', '2023-01-05', NULL, NULL, NULL, NULL, 65.00, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(8, 'Nike Dri-FIT T-Shirt', 'NIKE-DRIFIT-001', 'Nike Dri-FIT Men\'s Training T-Shirt', 2, 2, NULL, 'NIKE-DRIFIT-001-2023-001', '2023-03-15', NULL, NULL, NULL, NULL, 35.00, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(9, 'Galaxy Buds Pro', 'SMSNG-BUDSPRO-001', 'Samsung Galaxy Buds Pro wireless earbuds', 3, 1, NULL, 'SMSNG-BUDSPRO-001-2023-001', '2023-02-01', NULL, NULL, NULL, NULL, 199.99, 'pending', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(10, 'Apple Watch Series 8', 'APPL-WATCH8-001', 'Apple Watch Series 8 GPS 45mm', 4, 4, NULL, 'APPL-WATCH8-001-2023-001', '2023-03-20', NULL, NULL, NULL, NULL, 429.00, 'active', 0, '2025-04-22 06:19:33', '2025-04-22 06:19:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `verification_count` int(11) DEFAULT 0,
+  `report_count` int(11) DEFAULT 0,
+  `status` enum('active','inactive','suspended') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `phone`, `country`, `city`, `verification_count`, `report_count`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'johndo', 'john@example.com', '$2y$10$1qAz2wSx3eDc4rFv5tDZ5eKY8zIPsR/g/sgF576bmfQBK.ak9mVXS', 'Joh', 'Doe', NULL, 'United States', '', 5, 0, 'suspended', '2025-04-22 06:19:33', '2025-04-22 12:00:40'),
+(2, 'janedoe', 'jane@example.com', '$2y$10$1qAz2wSx3eDc4rFv5tDZ5eKY8zIPsR/g/sgF576bmfQBK.ak9mVXS', 'Jane', 'Doe', NULL, 'Canada', NULL, 3, 0, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(3, 'bobsmith', 'bob@example.com', '$2y$10$1qAz2wSx3eDc4rFv5tDZ5eKY8zIPsR/g/sgF576bmfQBK.ak9mVXS', 'Bob', 'Smith', NULL, 'United Kingdom', NULL, 8, 0, 'active', '2025-04-22 06:19:33', '2025-04-22 06:19:33'),
+(4, 'Prathamesh Sodage', 'psodage@gmail.com', '$2y$10$9LRVgHQpcaCRKJlTn4aVXOeyn0xZ1pUPrwFLIrsOiDawMJWKyYuJy', NULL, NULL, NULL, NULL, NULL, 0, 0, 'active', '2025-04-22 10:34:19', '2025-04-22 10:34:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verification_logs`
+--
+
+CREATE TABLE `verification_logs` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `device_info` varchar(255) DEFAULT NULL,
+  `location_lat` decimal(10,8) DEFAULT NULL,
+  `location_lng` decimal(11,8) DEFAULT NULL,
+  `location_address` text DEFAULT NULL,
+  `status` enum('authentic','fake','unknown') DEFAULT 'unknown',
+  `verification_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_logs`
+--
+
+INSERT INTO `verification_logs` (`id`, `product_id`, `user_id`, `ip_address`, `device_info`, `location_lat`, `location_lng`, `location_address`, `status`, `verification_timestamp`) VALUES
+(1, 1, 1, '192.168.1.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)', 40.71280000, -74.00600000, 'New York, NY, USA', 'authentic', '2025-04-22 06:19:33'),
+(2, 2, 2, '192.168.1.2', 'Mozilla/5.0 (Linux; Android 12)', 34.05220000, -118.24370000, 'Los Angeles, CA, USA', 'authentic', '2025-04-22 06:19:33'),
+(3, 4, 1, '192.168.1.3', 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)', 41.87810000, -87.62980000, 'Chicago, IL, USA', 'fake', '2025-04-22 06:19:33'),
+(4, 3, 3, '192.168.1.4', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 51.50740000, -0.12780000, 'London, UK', 'authentic', '2025-04-22 06:19:33');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent_id` (`parent_id`);
+
+--
+-- Indexes for table `fake_reports`
+--
+ALTER TABLE `fake_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_code` (`product_code`),
+  ADD UNIQUE KEY `unique_identifier` (`unique_identifier`),
+  ADD KEY `brand_id` (`brand_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `verification_logs`
+--
+ALTER TABLE `verification_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `fake_reports`
+--
+ALTER TABLE `fake_reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `verification_logs`
+--
+ALTER TABLE `verification_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `fake_reports`
+--
+ALTER TABLE `fake_reports`
+  ADD CONSTRAINT `fake_reports_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fake_reports_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `verification_logs`
+--
+ALTER TABLE `verification_logs`
+  ADD CONSTRAINT `verification_logs_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `verification_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
